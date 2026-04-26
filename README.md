@@ -19,6 +19,8 @@ Projeto desenvolvido para cálculo de materiais de construção, incluindo:
 * Swagger (Springdoc OpenAPI)
 * REST API
 * H2 Database (em memória)
+* JUnit 5 (Testes automatizados)
+* Spring Boot Test (MockMvc)
 
 ---
 
@@ -32,12 +34,102 @@ service/
 model/
 dto/
 repository/
+test/
 ```
 
 ### Principais services:
 
 * `TijoloService` → cálculo de quantidade de tijolos (m²)
 * `ConcretoService` → cálculo de volume (m³)
+
+---
+
+# 🧪 Testes Automatizados
+
+O projeto possui testes automatizados para garantir o funcionamento correto da API e das regras de negócio.
+
+## ⚙️ Tecnologias utilizadas nos testes
+
+* JUnit 5
+* Spring Boot Test
+* MockMvc
+* H2 Database (em memória)
+
+---
+
+## 📦 Estrutura dos testes
+
+Os testes estão localizados em:
+
+```
+src/test/java/
+```
+
+Organizados por camada:
+
+```
+controller/
+service/
+CalculadoraObraApplicationTests.java
+```
+
+---
+
+## 🚀 Tipos de testes implementados
+
+### ✔ Teste de contexto da aplicação
+
+Valida se o Spring Boot sobe corretamente.
+
+```
+@SpringBootTest
+class CalculadoraObraApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+}
+```
+
+---
+
+### ✔ Testes de Service (regras de negócio)
+
+Validam os cálculos de forma isolada.
+
+* TijoloService → cálculo de quantidade de tijolos
+* ConcretoService → cálculo de volume de concreto
+
+---
+
+### ✔ Testes de Controller (API REST)
+
+Utilizam MockMvc para simular requisições HTTP reais.
+
+Exemplo:
+
+```
+mockMvc.perform(post("/comodos")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(json))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.nome").value("Sala"));
+```
+
+---
+
+## 🧪 Como executar os testes
+
+Via Maven:
+
+```
+mvn test
+```
+
+Via IntelliJ:
+
+* Botão direito na pasta `test`
+* Run Tests
 
 ---
 
