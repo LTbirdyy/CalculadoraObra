@@ -1,4 +1,3 @@
-Aqui vai um **README bem organizado e pronto pra GitHub**, resumindo tudo que vocês fizeram e explicando como testar o sistema.
 
 ---
 
@@ -66,6 +65,7 @@ Depois divide pela área de um tijolo.
 {
   "arestas": [
     {
+      "id": 1,
       "comprimento": 5.0,
       "espessura": 0.2,
       "temPorta": true,
@@ -74,15 +74,32 @@ Depois divide pela área de um tijolo.
       "temJanela": true,
       "alturaJanela": 1.2,
       "larguraJanela": 1.5,
+      "inicio": {
+        "id": 1,
+        "nome": "Sala"
+      },
+      "fim": {
+        "id": 2,
+        "nome": "Cozinha"
+      },
       "largura": 3.0
     },
     {
+      "id": 2,
       "comprimento": 4.0,
       "espessura": 0.2,
       "temPorta": false,
       "temJanela": true,
       "alturaJanela": 1.0,
       "larguraJanela": 1.2,
+      "inicio": {
+        "id": 2,
+        "nome": "Cozinha"
+      },
+      "fim": {
+        "id": 3,
+        "nome": "Quarto"
+      },
       "largura": 2.8
     }
   ],
@@ -90,6 +107,7 @@ Depois divide pela área de um tijolo.
   "comprimentoTijolo": 0.29,
   "larguraTijolo": 0.14
 }
+
 ```
 
 ---
@@ -111,15 +129,7 @@ O volume é calculado usando:
 ### 📐 Fórmula:
 
 ```
-comprimento × altura × espessura
-```
-
----
-
-## 🧪 Service atual
-
-```java
-volumeParede = a.getComprimento() * altura * a.getEspessura();
+comprimento × altura × larguraviga
 ```
 
 ---
@@ -130,17 +140,33 @@ volumeParede = a.getComprimento() * altura * a.getEspessura();
 {
   "arestas": [
     {
+      "id": 1,
       "comprimento": 5.0,
       "espessura": 0.2,
-      "largura": 3.0
+      "inicio": {
+        "id": 1,
+        "nome": "Sala"
+      },
+      "fim": {
+        "id": 2,
+        "nome": "Cozinha"
+      }
     },
     {
+      "id": 2,
       "comprimento": 4.0,
       "espessura": 0.2,
-      "largura": 2.8
+      "inicio": {
+        "id": 2,
+        "nome": "Cozinha"
+      },
+      "fim": {
+        "id": 3,
+        "nome": "Quarto"
+      }
     }
   ],
-  "altura": 3.0
+  "altura": 0.3
 }
 ```
 
@@ -173,7 +199,7 @@ http://localhost:8080/swagger-ui.html
 ## 🧪 Passo a passo de teste
 
 1. Abrir Swagger
-2. Escolher endpoint (`/tijolo` ou `/concreto`)
+2. Escolher endpoint (`/tijolo` ou `/Volume`)
 3. Clicar em **Try it out**
 4. Colar o JSON
 5. Clicar em **Execute**
@@ -181,19 +207,6 @@ http://localhost:8080/swagger-ui.html
 
 ---
 
-# 🧠 Lógica do sistema
 
-## ✔ Tijolos:
-
-* calcula área
-* desconta portas e janelas
-* divide pela área do tijolo
-* arredonda para cima
-
-## ✔ Volume:
-
-* calcula volume da parede
-* usa espessura estrutural
-* soma todas as paredes
 
 
