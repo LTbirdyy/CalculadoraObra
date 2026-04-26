@@ -116,7 +116,5 @@ public class Aresta {
         this.fim = fim;
     }
 
-    public double getLargura() {
-        return 0;
-    }
+
 }
