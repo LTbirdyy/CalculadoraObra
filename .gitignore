@@ -1,17 +1,13 @@
 # ===== Maven =====
 target/
-!.mvn/wrapper/maven-wrapper.jar
+*.jar
+*.war
 
 # ===== IntelliJ IDEA =====
 .idea/
 *.iml
 *.iws
 *.ipr
-
-# ===== Eclipse (caso alguém abra) =====
-.classpath
-.project
-.settings/
 
 # ===== VS Code =====
 .vscode/
@@ -23,13 +19,12 @@ target/
 .DS_Store
 Thumbs.db
 
-# ===== Java compilado =====
+# ===== Java =====
 *.class
 
-# ===== Spring Boot =====
+# ===== Spring Boot configs locais =====
 application-dev.properties
 application-prod.properties
 
-# ===== Build/packaging =====
-*.jar
-*.war
+# ===== Maven wrapper (não remover) =====
+!.mvn/wrapper/maven-wrapper.jar
