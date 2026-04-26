@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/paredes")
+@RequestMapping("/vertices")
 public class ParedeController {
 
     private final ParedeRepository repository;

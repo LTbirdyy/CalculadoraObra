@@ -1,4 +1,3 @@
-
 ---
 
 # 🧱 Calculadora de Obra (Spring Boot)
@@ -19,6 +18,7 @@ Projeto desenvolvido para cálculo de materiais de construção, incluindo:
 * Maven
 * Swagger (Springdoc OpenAPI)
 * REST API
+* H2 Database (em memória)
 
 ---
 
@@ -31,12 +31,29 @@ controller/
 service/
 model/
 dto/
+repository/
 ```
 
 ### Principais services:
 
 * `TijoloService` → cálculo de quantidade de tijolos (m²)
 * `ConcretoService` → cálculo de volume (m³)
+
+---
+
+# 🧠 Modelagem do sistema (Grafo da planta)
+
+O sistema representa a planta da casa como um **grafo**:
+
+* 🔵 Vértices → pontos da planta (cantos/pilares)
+* 🧱 Arestas → paredes entre os vértices
+* 🏠 Cômodos → conjunto de paredes formando um espaço fechado
+
+### 📌 Entidades principais:
+
+* `Vertice` → nós do grafo
+* `Aresta` → paredes ligando dois vértices
+* `Comodo` → conjunto de arestas formando um ambiente
 
 ---
 
@@ -107,7 +124,6 @@ Depois divide pela área de um tijolo.
   "comprimentoTijolo": 0.29,
   "larguraTijolo": 0.14
 }
-
 ```
 
 ---
@@ -129,7 +145,7 @@ O volume é calculado usando:
 ### 📐 Fórmula:
 
 ```
-comprimento × altura × larguraviga
+comprimento × altura × espessura da viga
 ```
 
 ---
@@ -188,25 +204,16 @@ comprimento × altura × larguraviga
 http://localhost:8080/swagger-ui/index.html
 ```
 
-ou:
-
-```
-http://localhost:8080/swagger-ui.html
-```
-
 ---
 
 ## 🧪 Passo a passo de teste
 
 1. Abrir Swagger
-2. Escolher endpoint (`/tijolo` ou `/Volume`)
+2. Escolher endpoint (`/tijolo` ou `/concreto`)
 3. Clicar em **Try it out**
 4. Colar o JSON
 5. Clicar em **Execute**
 6. Ver resultado no response
 
 ---
-
-
-
 
