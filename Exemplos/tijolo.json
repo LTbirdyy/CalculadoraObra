@@ -1,0 +1,45 @@
+{
+  "arestas": [
+    {
+      "id": 1,
+      "comprimento": 5.0,
+      "espessura": 0.2,
+      "temPorta": true,
+      "alturaPorta": 2.1,
+      "larguraPorta": 0.9,
+      "temJanela": true,
+      "alturaJanela": 1.2,
+      "larguraJanela": 1.5,
+      "inicio": {
+        "id": 1,
+        "nome": "Sala"
+      },
+      "fim": {
+        "id": 2,
+        "nome": "Cozinha"
+      },
+      "largura": 3.0
+    },
+    {
+      "id": 2,
+      "comprimento": 4.0,
+      "espessura": 0.2,
+      "temPorta": false,
+      "temJanela": true,
+      "alturaJanela": 1.0,
+      "larguraJanela": 1.2,
+      "inicio": {
+        "id": 2,
+        "nome": "Cozinha"
+      },
+      "fim": {
+        "id": 3,
+        "nome": "Quarto"
+      },
+      "largura": 2.8
+    }
+  ],
+  "altura": 3.0,
+  "comprimentoTijolo": 0.29,
+  "larguraTijolo": 0.14
+}

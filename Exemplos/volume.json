@@ -1,0 +1,31 @@
+{
+  "arestas": [
+    {
+      "id": 1,
+      "comprimento": 5.0,
+      "espessura": 0.2,
+      "inicio": {
+        "id": 1,
+        "nome": "Sala"
+      },
+      "fim": {
+        "id": 2,
+        "nome": "Cozinha"
+      }
+    },
+    {
+      "id": 2,
+      "comprimento": 4.0,
+      "espessura": 0.2,
+      "inicio": {
+        "id": 2,
+        "nome": "Cozinha"
+      },
+      "fim": {
+        "id": 3,
+        "nome": "Quarto"
+      }
+    }
+  ],
+  "altura": 0.3
+}
