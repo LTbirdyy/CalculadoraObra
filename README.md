@@ -119,12 +119,6 @@ mockMvc.perform(post("/comodos")
 
 ## 🧪 Como executar os testes
 
-Via Maven:
-
-```
-mvn test
-```
-
 Via IntelliJ:
 
 * Botão direito na pasta `test`
