@@ -52,19 +52,19 @@ public class PlantaBean implements Serializable {
         comodo = new ComodoDTO();
     }
 
-    // ➕ adicionar parede ao cômodo atual
+    // adicionar parede ao cômodo atual
     public void adicionarParede() {
         comodo.getParedes().add(parede);
         parede = new ParedeDTO();
     }
 
-    // ➕ adicionar cômodo (com suas paredes) à lista
+    // adicionar cômodo (com suas paredes) à lista
     public void adicionarComodo() {
         comodos.add(comodo);
         comodo = new ComodoDTO();
     }
 
-    // 🧮 cálculo final, chamando os services de verdade
+    // cálculo final, chamando os services de verdade
     public void calcular() {
         areaTotal = 0;
         volumeConcreto = 0;
@@ -104,6 +104,18 @@ public class PlantaBean implements Serializable {
 
         numeroOrcamento = orcamento.getNumero();
         calculado = true;
+    }
+
+    // remover cômodo específico da lista
+    public void removerComodo(ComodoDTO comodoParaRemover) {
+        comodos.remove(comodoParaRemover);
+    }
+
+    // remover apenas o último cômodo adicionado
+    public void removerUltimoComodo() {
+        if (!comodos.isEmpty()) {
+            comodos.remove(comodos.size() - 1);
+        }
     }
 
     // getters e setters

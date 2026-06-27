@@ -125,8 +125,18 @@
                             <h:column><f:facet name="header">Largura (m)</f:facet>#{c.largura}</h:column>
                             <h:column><f:facet name="header">Comprimento (m)</f:facet>#{c.comprimento}</h:column>
                             <h:column><f:facet name="header">Paredes</f:facet>#{c.paredes.size()}</h:column>
+                            <h:column>
+                                <f:facet name="header">Ações</f:facet>
+                                <h:commandButton value="🗑️" styleClass="btn-delete"
+                                                 action="#{plantaBean.removerComodo(c)}" />
+                            </h:column>
                         </h:dataTable>
                     </table>
+
+                    <br/>
+                    <h:commandButton value="↩️ Desfazer último cômodo" styleClass="btn btn-outline"
+                                     action="#{plantaBean.removerUltimoComodo}"
+                                     rendered="#{not empty plantaBean.comodos}" />
                 </div>
 
                 <div class="card">

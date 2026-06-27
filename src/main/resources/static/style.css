@@ -206,3 +206,17 @@ table.data-table td {
     font-weight: 600;
     text-decoration: none;
 }
+
+.btn-delete {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
+}
