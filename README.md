@@ -1,5 +1,4 @@
-
-# 🧱 Calculadora de Obra (Spring Boot)
+# 🧱 Calculadora de Obra (Spring Boot + Jakarta Faces)
 
 Projeto desenvolvido para cálculo de materiais de construção, incluindo:
 
@@ -7,6 +6,8 @@ Projeto desenvolvido para cálculo de materiais de construção, incluindo:
 * 🧱 Volume de concreto
 * 🚪 Descontos de portas e janelas
 * 📏 Cálculos baseados em áreas e volumes reais
+* 🖥️ Frontend em Jakarta Faces (JSF) integrado ao backend
+* 📋 Geração e busca de orçamentos
 
 ---
 
@@ -15,6 +16,7 @@ Projeto desenvolvido para cálculo de materiais de construção, incluindo:
 * Java 17+
 * Spring Boot
 * Maven
+* Jakarta Faces (JSF) via JoinFaces (Mojarra)
 * Swagger (Springdoc OpenAPI)
 * REST API
 * H2 Database (em memória)
@@ -33,13 +35,68 @@ service/
 model/
 dto/
 repository/
+bean/
 test/
+webapp/
+resources/static/
 ```
 
 ### Principais services:
 
 * `TijoloService` → cálculo de quantidade de tijolos (m²)
 * `ConcretoService` → cálculo de volume (m³)
+
+### Principais beans (frontend JSF):
+
+* `PlantaBean` → cadastro de cômodos e paredes, e cálculo do orçamento
+* `OrcamentoBean` → busca de orçamentos por número ou nome do usuário
+
+---
+
+# 🖥️ Frontend (Jakarta Faces)
+
+O frontend foi desenvolvido em Jakarta Faces (JSF), rodando junto com o Spring Boot através do JoinFaces.
+
+## 📄 Telas
+
+* **`index.xhtml`** → tela principal: cadastro de solicitante, cômodos e paredes (com porta/janela opcionais), tijolo de referência, e exibição do resultado do orçamento calculado
+* **`buscaOrcamento.xhtml`** → tela de busca de orçamentos já salvos, por número ou por nome do usuário
+
+## 🎨 Estilização
+
+O layout usa um CSS próprio em `src/main/resources/static/style.css`, servido pelo Spring Boot e referenciado nas páginas via:
+
+```xml
+<link rel="stylesheet" type="text/css" href="/style.css" />
+```
+
+> ⚠️ Não usar `<h:outputStylesheet>` apontando para `webapp/resources`, pois o Spring Boot não serve essa pasta — os arquivos estáticos devem ficar em `src/main/resources/static/`.
+
+## 📋 Fluxo de uso
+
+1. Informar o nome do solicitante
+2. Cadastrar um cômodo (nome, largura, comprimento, altura)
+3. Adicionar uma ou mais paredes ao cômodo (com ou sem porta/janela)
+4. Finalizar o cômodo e repetir para os demais ambientes da planta
+5. Informar as dimensões do tijolo de referência
+6. Clicar em **Calcular Obra** → o sistema gera a área total, volume de concreto e quantidade de tijolos, além de um **número de orçamento**
+7. O orçamento é salvo no banco e pode ser consultado depois na tela de busca
+
+---
+
+# 📋 Orçamentos
+
+Cada cálculo gera um registro de orçamento persistido no banco H2, contendo:
+
+* Número do orçamento (gerado automaticamente)
+* Nome do usuário solicitante
+* Data de criação
+* Área total, volume de concreto e quantidade de tijolos calculados
+
+A entidade `Orcamento` é gerenciada pelo `OrcamentoRepository`, com busca por:
+
+* Número exato (`findByNumero`)
+* Nome do usuário, parcial e case-insensitive (`findByNomeUsuarioContainingIgnoreCase`)
 
 ---
 
@@ -117,6 +174,12 @@ mockMvc.perform(post("/comodos")
 
 ---
 
+### ✔ Testes manuais de fluxo (Frontend)
+
+Além dos testes automatizados, foi elaborado um **Plano de Teste** cobrindo o fluxo completo via interface JSF (cadastro de cômodo/parede, cálculo, geração e busca de orçamento), com evidências de execução. Documento disponível junto à entrega da atividade.
+
+---
+
 ## 🧪 Como executar os testes
 
 Via IntelliJ:
@@ -139,6 +202,7 @@ O sistema representa a planta da casa como um **grafo**:
 * `Vertice` → nós do grafo
 * `Aresta` → paredes ligando dois vértices
 * `Comodo` → conjunto de arestas formando um ambiente
+* `Orcamento` → registro do cálculo final, vinculado a um usuário
 
 ---
 
@@ -281,6 +345,24 @@ comprimento × altura × espessura da viga
 
 ---
 
+# 🧪 Exemplo de teste (Frontend / Tela JSF)
+
+Cenário simples para validar o fluxo completo pela interface:
+
+**Cômodo:** Sala — Largura 4m, Comprimento 5m, Altura 2.8m
+**Parede:** Comprimento 5m, Espessura 0.15m, sem porta/janela
+**Tijolo de referência:** 0.19m x 0.09m
+
+## 📊 Resultado esperado
+
+```
+Área total: 20 m²
+Volume de concreto: 2.1 m³
+Quantidade de tijolos: 819
+```
+
+---
+
 # ⚙️ Swagger (como testar a API)
 
 ## 📍 Acesse:
@@ -302,3 +384,20 @@ http://localhost:8080/swagger-ui/index.html
 
 ---
 
+# 🌐 Frontend (como testar)
+
+## 📍 Acesse:
+
+```
+http://localhost:8080/index.xhtml
+```
+
+## 🧪 Passo a passo de teste
+
+1. Informar nome do solicitante
+2. Cadastrar cômodo e suas paredes
+3. Clicar em **Calcular Obra**
+4. Conferir o número do orçamento gerado e os totais calculados
+5. Acessar **Buscar orçamentos existentes** para localizar pelo número ou nome do usuário
+
+---
