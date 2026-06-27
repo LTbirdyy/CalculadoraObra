@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Buscar Orçamentos</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+</h:head>
+
+<h:body>
+
+    <div class="app-header">
+        <h1>🔍 Buscar Orçamento</h1>
+    </div>
+
+    <h:form id="formBusca">
+        <div class="container" style="grid-template-columns: 1fr;">
+
+            <div class="card">
+                <div class="card-title">Por número</div>
+                <div class="field-group">
+                    <h:inputText value="#{orcamentoBean.numeroBusca}" />
+                </div>
+                <h:commandButton value="Buscar por número" styleClass="btn btn-blue"
+                                 action="#{orcamentoBean.buscarPorNumero}" />
+            </div>
+
+            <div class="card">
+                <div class="card-title">Por nome do usuário</div>
+                <div class="field-group">
+                    <h:inputText value="#{orcamentoBean.nomeBusca}" />
+                </div>
+                <h:commandButton value="Buscar por nome" styleClass="btn btn-blue"
+                                 action="#{orcamentoBean.buscarPorNome}" />
+            </div>
+
+            <h:outputText value="#{orcamentoBean.mensagem}" style="color:#c0392b; font-weight:600;" />
+
+            <div class="card" rendered="#{not empty orcamentoBean.resultados}">
+                <div class="card-title">Resultados</div>
+                <table class="data-table">
+                    <h:dataTable value="#{orcamentoBean.resultados}" var="o">
+                        <h:column><f:facet name="header">Número</f:facet>#{o.numero}</h:column>
+                        <h:column><f:facet name="header">Usuário</f:facet>#{o.nomeUsuario}</h:column>
+                        <h:column><f:facet name="header">Data</f:facet>#{o.dataCriacao}</h:column>
+                        <h:column><f:facet name="header">Área (m²)</f:facet>#{o.areaTotal}</h:column>
+                        <h:column><f:facet name="header">Concreto (m³)</f:facet>#{o.volumeConcreto}</h:column>
+                        <h:column><f:facet name="header">Tijolos</f:facet>#{o.quantidadeTijolos}</h:column>
+                    </h:dataTable>
+                </table>
+            </div>
+
+            <h:link outcome="index" styleClass="link-nav" value="← Voltar"/>
+
+        </div>
+    </h:form>
+
+</h:body>
+</html>

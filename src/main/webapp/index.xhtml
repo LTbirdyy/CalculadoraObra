@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Calculadora de Materiais para Obra</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" /></h:head>
+
+<h:body>
+
+    <div class="app-header">
+        <h1>🏗️ Calculadora de Materiais para Obra</h1>
+    </div>
+
+    <h:form id="formOrcamento">
+        <div class="container">
+
+            <!-- COLUNA ESQUERDA -->
+            <div>
+                <div class="card">
+                    <div class="card-title">👤 Solicitante</div>
+                    <div class="field-group">
+                        <label>Nome do solicitante</label>
+                        <h:inputText value="#{plantaBean.nomeUsuario}" required="true" />
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">➕ Adicionar Cômodo</div>
+
+                    <div class="field-group">
+                        <label>Nome do cômodo</label>
+                        <h:inputText value="#{plantaBean.comodo.nome}" />
+                    </div>
+                    <div class="field-group">
+                        <label>Largura (m)</label>
+                        <h:inputText value="#{plantaBean.comodo.largura}" />
+                    </div>
+                    <div class="field-group">
+                        <label>Comprimento (m)</label>
+                        <h:inputText value="#{plantaBean.comodo.comprimento}" />
+                    </div>
+                    <div class="field-group">
+                        <label>Pé-direito / Altura (m)</label>
+                        <h:inputText value="#{plantaBean.comodo.altura}" />
+                    </div>
+
+                    <div class="subform-box">
+                        <div class="card-title" style="font-size:14px;">🧱 Parede do cômodo atual</div>
+
+                        <div class="field-group">
+                            <label>Comprimento da parede (m)</label>
+                            <h:inputText value="#{plantaBean.parede.comprimento}" />
+                        </div>
+                        <div class="field-group">
+                            <label>Espessura (m)</label>
+                            <h:inputText value="#{plantaBean.parede.espessura}" />
+                        </div>
+
+                        <div class="checkbox-row">
+                            <h:selectBooleanCheckbox value="#{plantaBean.parede.temPorta}" />
+                            <label>Tem porta?</label>
+                        </div>
+                        <div class="field-group">
+                            <label>Altura da porta (m)</label>
+                            <h:inputText value="#{plantaBean.parede.alturaPorta}" />
+                        </div>
+                        <div class="field-group">
+                            <label>Largura da porta (m)</label>
+                            <h:inputText value="#{plantaBean.parede.larguraPorta}" />
+                        </div>
+
+                        <div class="checkbox-row">
+                            <h:selectBooleanCheckbox value="#{plantaBean.parede.temJanela}" />
+                            <label>Tem janela?</label>
+                        </div>
+                        <div class="field-group">
+                            <label>Altura da janela (m)</label>
+                            <h:inputText value="#{plantaBean.parede.alturaJanela}" />
+                        </div>
+                        <div class="field-group">
+                            <label>Largura da janela (m)</label>
+                            <h:inputText value="#{plantaBean.parede.larguraJanela}" />
+                        </div>
+
+                        <h:commandButton value="+ Adicionar Parede" styleClass="btn btn-outline"
+                                         action="#{plantaBean.adicionarParede}" />
+                    </div>
+
+                    <table class="data-table">
+                        <h:dataTable value="#{plantaBean.comodo.paredes}" var="p">
+                            <h:column><f:facet name="header">Comprimento</f:facet>#{p.comprimento}</h:column>
+                            <h:column><f:facet name="header">Espessura</f:facet>#{p.espessura}</h:column>
+                            <h:column><f:facet name="header">Porta</f:facet>#{p.temPorta}</h:column>
+                            <h:column><f:facet name="header">Janela</f:facet>#{p.temJanela}</h:column>
+                        </h:dataTable>
+                    </table>
+
+                    <br/>
+                    <h:commandButton value="+ Finalizar Cômodo" styleClass="btn btn-green"
+                                     action="#{plantaBean.adicionarComodo}" />
+                </div>
+
+                <div class="card">
+                    <div class="card-title">🧱 Tijolo de Referência</div>
+                    <div class="field-group">
+                        <label>Comprimento do tijolo (m)</label>
+                        <h:inputText value="#{plantaBean.comprimentoTijolo}" />
+                    </div>
+                    <div class="field-group">
+                        <label>Largura do tijolo (m)</label>
+                        <h:inputText value="#{plantaBean.larguraTijolo}" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUNA DIREITA -->
+            <div>
+                <div class="card">
+                    <div class="card-title">📋 Lista de Cômodos</div>
+                    <table class="data-table">
+                        <h:dataTable value="#{plantaBean.comodos}" var="c">
+                            <h:column><f:facet name="header">Nome</f:facet>#{c.nome}</h:column>
+                            <h:column><f:facet name="header">Largura (m)</f:facet>#{c.largura}</h:column>
+                            <h:column><f:facet name="header">Comprimento (m)</f:facet>#{c.comprimento}</h:column>
+                            <h:column><f:facet name="header">Paredes</f:facet>#{c.paredes.size()}</h:column>
+                        </h:dataTable>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h:commandButton value="🧮 Calcular Obra" styleClass="btn btn-blue"
+                                     action="#{plantaBean.calcular}" />
+                </div>
+
+                <h:panelGroup rendered="#{plantaBean.calculado}">
+                    <div class="card">
+                        <div class="card-title">✅ Resultado do Cálculo</div>
+
+                        <span class="orcamento-numero">Orçamento Nº #{plantaBean.numeroOrcamento}</span>
+
+                        <div class="result-grid">
+                            <div class="result-box blue">
+                                <div class="label">ÁREA TOTAL</div>
+                                <div class="value">#{plantaBean.areaTotal} m²</div>
+                            </div>
+                            <div class="result-box green">
+                                <div class="label">QUANTIDADE DE TIJOLOS</div>
+                                <div class="value">#{plantaBean.quantidadeTijolos}</div>
+                            </div>
+                            <div class="result-box purple">
+                                <div class="label">VOLUME DE CONCRETO</div>
+                                <div class="value">#{plantaBean.volumeConcreto} m³</div>
+                            </div>
+                        </div>
+
+                        <div class="info-banner">
+                            ℹ️ Os cálculos são estimativos e podem variar conforme o projeto executivo e materiais utilizados.
+                        </div>
+                    </div>
+                </h:panelGroup>
+            </div>
+
+            <div class="full-width" style="text-align:center; margin-top: 12px;">
+                <h:link outcome="buscarOrcamento" styleClass="link-nav" value="🔍 Buscar orçamentos existentes" />
+            </div>
+
+        </div>
+    </h:form>
+
+</h:body>
+</html>
